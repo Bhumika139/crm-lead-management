@@ -6,13 +6,17 @@ app = Flask(__name__)
 CORS(app)
 
 # ---------- DB CONNECTION ----------
+import os
+
 def get_db():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="@Sanjayji987",
-        database="crm"
+        host=os.getenv("mysql.railway.internal"),
+        user=os.getenv("root"),
+        password=os.getenv("BGMlJqXIlGJbpzGGMkNtCtnoRSiIqesA"),
+        database=os.getenv("railway"),
+        port=int(os.getenv("3306"))
     )
+
 
 # ---------- HOME ----------
 @app.route("/")
