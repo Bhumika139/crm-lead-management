@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import mysql.connector
+import os
 
 app = Flask(__name__)
 CORS(app)
 
 # ---------- DB CONNECTION ----------
-import os
+
 
 def get_db():
     return mysql.connector.connect(
@@ -33,6 +34,11 @@ def get_leads():
     cursor.close()
     db.close()
     return jsonify(data)
+
+#---------Run----------
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
 
 # ---------- ADD LEAD ----------
 @app.route("/addLead", methods=["POST"])
