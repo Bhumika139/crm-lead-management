@@ -394,33 +394,48 @@ function saveLead(){
   status:lStatus.value
  };
 
- fetch("http://127.0.0.1:5000/addLead",{
-   method:"POST",
-   headers:{ "Content-Type":"application/json" },
-   body:JSON.stringify(d)
- })
- .then(res=>res.json())
- .then(()=>{
-   alert("Lead successfully added ✅");
-   modal.style.display='none';
+//  fetch("https://crm-lead-management-production.up.railway.app
+// /addLead",{
+//    method:"POST",
+//    headers:{ "Content-Type":"application/json" },
+//    body:JSON.stringify(d)
+//  })
+//  .then(res=>res.json())
+//  .then(()=>{
+//    alert("Lead successfully added ✅");
+//    modal.style.display='none';
+
+fetch("https://crm-lead-management-production.up.railway.app/addLead", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(d)
+})
+.then(res => res.json())
+.then(() => {
+  alert("Lead successfully added ✅");
+  modal.style.display = "none";
+})
+.catch(() => {
+  alert("Backend error ❌");
+});
+
 
    // backend se fresh data lao
-   fetch("http://127.0.0.1:5000/leads")
+  fetch("https://crm-lead-management-production.up.railway.app/leads")
    .then(res=>res.json())
    .then(data=>{
      leads=data;     // SAME leads array
      render();       // SAME render function
-   });
- })
- .catch(()=>{
-   alert("Backend error ❌");
- });
-}
+   })
+   .catch(() => {
+      alert("Backend error ❌");
+    });
+ }
 
 function deleteLead(id){
   if(!confirm("Delete this lead?")) return;
 
-  fetch(`http://127.0.0.1:5000/deleteLead/${id}`, {
+ fetch(`https://crm-lead-management-production.up.railway.app/deleteLead/${id}`, {
     method: "DELETE"
   })
   .then(res => res.json())
@@ -479,7 +494,7 @@ function render(){
  cLead.innerText=leads.filter(l=>l.status==="Converted").length;
 }
 
-fetch(`http://127.0.0.1:5000/updateLead/${leadId}`, {
+fetch(`https://crm-lead-management-production.up.railway.app/updateLead/${leadId}`, {
   method: "PUT",
   headers: {
     "Content-Type": "application/json"
